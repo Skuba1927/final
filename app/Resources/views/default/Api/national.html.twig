@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block title %}Курс в Национальном Банке{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-success">
+
+                    {% if api != null %}
+                        <table width="50%">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>Покупка</td>
+                                <td>Продажа</td>
+                            </tr>
+
+                            {% for key, value in api %}
+                                <tr>
+                                    <td>1.{{ value.cc }}</td>
+                                    <td>{{ value.txt }}</td>
+                                    <td>{{ value.rate|round(2, 'common') }}</td>
+                                    <td></td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

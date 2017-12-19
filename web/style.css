@@ -1,0 +1,16 @@
+.navbar-default {
+    background: #958332;
+    background: black;
+}
+  .navbar-my ul li a{
+      color: #fff;
+  }
+  .navbar-my ul li a:hover{
+      background: #333;
+  }
+  .navbar-my .navbar-brand{
+      color: #fff;
+  }
+  body {
+      background: black;
+  }

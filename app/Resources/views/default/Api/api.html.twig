@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block title %}Курс Приват Банка{% endblock %}
+
+
+{% block body %}
+    {{ parent() }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-success">
+
+                    {% if api != null %}
+                        <table width="50%">
+                            {% for key, value in api %}
+                                <div>
+
+                                </div>
+                                <tr>
+                                    <td>{{ value.ccy }}</td>
+                                    <td>{{ value.base_ccy }}</td>
+                                    <td>{{ value.buy|round(2, 'common') }}</td>
+                                    <td>{{ value.sale|round(2, 'common') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

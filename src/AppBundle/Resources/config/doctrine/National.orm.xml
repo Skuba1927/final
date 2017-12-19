@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\National" table="national">
+    <id name="date" type="datetime" column="date">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="usd" type="float" column="usd" precision="10" scale="0" nullable="false"/>
+    <field name="euro" type="float" column="euro" precision="10" scale="0" nullable="false"/>
+    <field name="rub" type="float" column="rub" precision="10" scale="0" nullable="false"/>
+    <field name="pln" type="float" column="pln" precision="10" scale="0" nullable="false"/>
+  </entity>
+</doctrine-mapping>

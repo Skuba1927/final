@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% block title %}Курс Биткоина{% endblock %}
+
+{% block head %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['line']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'Число');
+            data.addColumn('number', 'Покупка');
+            data.addColumn('number', 'Продажа');
+
+            data.addRows({{ arr }});
+
+
+            var options = {
+                chart: {
+                    title: 'Курс'
+                },
+                width: 900,
+                height: 500,
+                axes: {
+                    x: {
+                        0: {side: 'top'}
+                    }
+                }
+            };
+
+            var chart = new google.charts.Line(document.getElementById('line_top_x'));
+
+            chart.draw(data, google.charts.Line.convertOptions(options));
+        }
+    </script>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-success">
+
+                    {% if api != null %}
+                        <table width="50%">
+                            <tr>
+                                <td>Покупка</td>
+                                <td>Продажа</td>
+                            </tr>
+                            <tr>
+                                <td>{{ api.buy }}</td>
+                                <td>{{ api.sell }}</td>
+                            </tr>
+                        </table>
+                    {% endif %}
+
+                </div>
+                <div id="line_top_x"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

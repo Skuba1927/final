@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Private" table="private">
+    <id name="date" type="datetime" column="date">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="euroBuy" type="float" column="euro_buy" precision="10" scale="0" nullable="false"/>
+    <field name="euroSell" type="float" column="euro_sell" precision="10" scale="0" nullable="false"/>
+    <field name="usdBuy" type="float" column="usd_buy" precision="10" scale="0" nullable="false"/>
+    <field name="usdSell" type="float" column="usd_sell" precision="10" scale="0" nullable="false"/>
+    <field name="rurBuy" type="float" column="rur_buy" precision="10" scale="0" nullable="false"/>
+    <field name="rurSell" type="float" column="rur_sell" precision="10" scale="0" nullable="false"/>
+    <field name="btnBuy" type="float" column="btn_buy" precision="10" scale="0" nullable="false"/>
+    <field name="btnSell" type="float" column="btn_sell" precision="10" scale="0" nullable="false"/>
+  </entity>
+</doctrine-mapping>
