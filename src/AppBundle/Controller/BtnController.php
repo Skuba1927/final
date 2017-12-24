@@ -25,12 +25,17 @@ class BtnController extends Controller
 
     public function showAction(Request $request)
     {
-        $bitcoin_multiplication  = '';
+
+      $bitcoin_multiplication  = '';
         if ($request->get('bitcoin_multiplication') && !empty($request->get('bitcoin_multiplication'))) {
             $bitcoin_multiplication = $request->get('bitcoin_multiplication');
         }
 
-        $bitcoin = new BitcoinApi();
+       
+
+        $em = $this->getDoctrine()->getManager();
+
+        $bitcoin = new BitcoinApi($em);
         $bitcoin->request();
         //$bitcoin->recordToDB();
         $arr =  '[

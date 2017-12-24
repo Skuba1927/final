@@ -10,6 +10,7 @@ namespace AppBundle\Utils;
 
 use AppBundle\Controller\BtnController;
 use AppBundle\Entity\Bitcoin;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +22,16 @@ class BitcoinApi extends Controller
     const API_URL = 'https://blockchain.info/ru/ticker';
     public $currency = 'Bitcoin';
     private $response;
+
+    /**
+     * @Var EntityManager
+     */
+    protected $em;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
     private function setResponse($response)
     {
@@ -48,14 +59,14 @@ class BitcoinApi extends Controller
     public function recordToDB()
     {
         $array = $this->arrayForDB();
-        $em = $this->getDoctrine()->getManager();
 
         $bitcoin = new Bitcoin();
         $bitcoin->setBuy($array['buy']);
         $bitcoin->setSell($array['sell']);
+        $bitcoin->setDate();
 
-        $em->persist($bitcoin);
-        $em->flush();
+        $this->em->persist($bitcoin);
+        $this->em->flush();
     }
 
     public function getMultiplication ($number)

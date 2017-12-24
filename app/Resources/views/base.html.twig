@@ -6,9 +6,8 @@
         {% block stylesheets  %}
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-            {% stylesheets  filter='cssrewrite' %}
-                <link  rel="stylesheet" href="{{ asset('style.css') }} " >
-            {% endstylesheets %}
+
+           
             <style>
                 a:hover {
                     text-decoration: none;
@@ -132,6 +131,9 @@
                 .form-control {
                     display: inline-block;
                 }
+=======
+            <link  href="{{ asset('css/style.css') }} " rel="stylesheet">
+
 
             </style>
 
