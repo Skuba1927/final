@@ -7,4 +7,6 @@ services:
     app.form_login_authenticator:
         class: AppBundle\Security\FormLoginAuthenticator
         arguments: ["@router", "@security.password_encoder"]
-
+    bitcoinApi:
+        class:        AppBundle\Utils\BitcoinApi
+        arguments:    ["@doctrine.orm.entity_manager"]

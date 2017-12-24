@@ -24,7 +24,9 @@ class BtnController extends  Controller
 
     public function showAction(Request $request)
     {
-        $bitcoin = new BitcoinApi();
+        $em = $this->getDoctrine()->getManager();
+
+        $bitcoin = new BitcoinApi($em);
         $bitcoin->request();
         $bitcoin->recordToDB();
         $arr =  '[
