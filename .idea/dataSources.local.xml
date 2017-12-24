@@ -2,13 +2,13 @@
 <project version="4">
   <component name="dataSourceStorageLocal">
     <data-source name="symfony@localhost" uuid="90ecd5fb-b514-4423-8380-02cfeb9809b9">
-      <database-info product="MySQL" version="5.5.5-10.1.28-MariaDB" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.44 ( Revision: b3cda4f864902ffdde495b9df93937c3e20009be )">
+      <database-info product="MySQL" version="5.7.20" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.44 ( Revision: b3cda4f864902ffdde495b9df93937c3e20009be )">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
       </database-info>
-      <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper" />
       <secret-storage>master_key</secret-storage>
-      <user-name>bog</user-name>
+      <user-name>root</user-name>
       <introspection-schemas>*:symfony</introspection-schemas>
     </data-source>
   </component>

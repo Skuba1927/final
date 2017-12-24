@@ -50,6 +50,11 @@ class Bitcoin
         return $this->date;
     }
 
+    public function setDate()
+    {
+        $this->date = new \DateTime("now");;
+    }
+
 
     /**
      * @return float
