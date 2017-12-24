@@ -8,8 +8,14 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Bitcoin;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-class BitcoinRepository
+class BitcoinRepository extends ServiceEntityRepository
 {
-
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Bitcoin::class);
+    }
 }

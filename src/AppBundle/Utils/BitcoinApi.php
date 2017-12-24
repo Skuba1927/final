@@ -13,8 +13,9 @@ use AppBundle\Entity\Bitcoin;
 use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class BitcoinApi
+class BitcoinApi extends Controller
 {
     use ControllerTrait;
     const API_URL = 'https://blockchain.info/ru/ticker';
@@ -55,6 +56,40 @@ class BitcoinApi
 
         $em->persist($bitcoin);
         $em->flush();
+    }
+
+    public function getMultiplication ($number)
+    {
+        return $number * $this->response->buy;
+    }
+
+    private function compareSell() {
+        //получить вчерашнюю стоимость
+        if ($this->response->sell > $yesterday) {
+            $string = " продажа ввыросла на ";
+            $diff = $this->response->sell - $yesterday;
+        } else {
+            $string = " продажа упала на ";
+            $diff = $yesterday - $this->response->sell;
+        }
+        return $string.$diff;
+    }
+
+    private function compareBuy() {
+        //получить вчерашнюю стоимость
+        if ($this->response->buy > $yesterday) {
+            $string = " покупка ввыросла на ";
+            $diff = $this->response->buy - $yesterday;
+        } else {
+            $string = " покупка упала на ";
+            $diff = $yesterday - $this->response->buy;
+        }
+        return $string.$diff;
+    }
+
+    public function joinCompares()
+    {
+        return $this->compareBuy().", ".$this->compareSell().".";
     }
 }
 

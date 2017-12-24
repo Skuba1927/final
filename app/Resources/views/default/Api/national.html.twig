@@ -1,36 +1,72 @@
 {% extends 'base.html.twig' %}
 {% block title %}Курс в Национальном Банке{% endblock %}
+{% block head %}
+    {% block script %}
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['line']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+
+                var data = new google.visualization.DataTable();
+                data.addColumn('number', 'Число');
+                data.addColumn('number', 'PLN');
+                data.addColumn('number', 'RUB');
+                data.addColumn('number', 'USD');
+                data.addColumn('number', 'EUR');
+
+                data.addRows({{ arr }});
 
 
-{% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-success">
+                var options = {
+                    chart: {
+                        title: 'Курс за 7 дней'
+                    },
+                    width: 900,
+                    height: 500,
+                    axes: {
+                        x: {
+                            0: {side: 'top'}
+                        }
+                    }
+                };
+
+                var chart = new google.charts.Line(document.getElementById('line_top_x'));
+
+                chart.draw(data, google.charts.Line.convertOptions(options));
+            }
+        </script>
+    {% endblock %}
+{% endblock %}
+
+{% block rate %}
+    <section class="today-info">
+        <div class="container" >
 
                     {% if api != null %}
-                        <table width="50%">
+                        <table width="80%" class="table-rate">
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td>Покупка</td>
-                                <td>Продажа</td>
+                                <td width="25%"></td>
+                                <td width="50%"></td>
+                                <td width="25%">Курс</td>
                             </tr>
 
                             {% for key, value in api %}
                                 <tr>
                                     <td>1.{{ value.cc }}</td>
                                     <td>{{ value.txt }}</td>
-                                    <td>{{ value.rate|round(2, 'common') }}</td>
-                                    <td></td>
+                                    <td><span class="size65">{{ value.rate|round(2, 'common') }}</span>грн</td>
                                 </tr>
                             {% endfor %}
+                            <tr>
+                                <td colspan="3" class="sentence">
+                                    <span>По сравнению со вчера: </span>
+                                </td>
+                            </tr>
                         </table>
                     {% endif %}
 
-                </div>
-
-            </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

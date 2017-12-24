@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Bitcoin
  *
  * @ORM\Table(name="bitcoin")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MonRépertoire\MonRepository")
  */
 class Bitcoin
 {

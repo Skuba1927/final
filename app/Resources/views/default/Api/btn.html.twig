@@ -2,62 +2,68 @@
 {% block title %}Курс Биткоина{% endblock %}
 
 {% block head %}
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages':['line']});
-        google.charts.setOnLoadCallback(drawChart);
+    {% block script %}
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['line']});
+            google.charts.setOnLoadCallback(drawChart);
 
-        function drawChart() {
+            function drawChart() {
 
-            var data = new google.visualization.DataTable();
-            data.addColumn('number', 'Число');
-            data.addColumn('number', 'Покупка');
-            data.addColumn('number', 'Продажа');
+                var data = new google.visualization.DataTable();
+                data.addColumn('number', 'Число');
+                data.addColumn('number', 'Покупка');
+                data.addColumn('number', 'Продажа');
 
-            data.addRows({{ arr }});
+                data.addRows({{ arr }});
 
 
-            var options = {
-                chart: {
-                    title: 'Курс'
-                },
-                width: 900,
-                height: 500,
-                axes: {
-                    x: {
-                        0: {side: 'top'}
+                var options = {
+                    chart: {
+                        title: 'Курс за 7 дней'
+                    },
+                    width: 900,
+                    height: 500,
+                    axes: {
+                        x: {
+                            0: {side: 'top'}
+                        }
                     }
-                }
-            };
+                };
 
-            var chart = new google.charts.Line(document.getElementById('line_top_x'));
+                var chart = new google.charts.Line(document.getElementById('line_top_x'));
 
-            chart.draw(data, google.charts.Line.convertOptions(options));
-        }
-    </script>
+                chart.draw(data, google.charts.Line.convertOptions(options));
+            }
+        </script>
+    {% endblock %}
 {% endblock %}
-{% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-success">
 
-                    {% if api != null %}
-                        <table width="50%">
-                            <tr>
-                                <td>Покупка</td>
-                                <td>Продажа</td>
-                            </tr>
-                            <tr>
-                                <td>{{ api.buy }}</td>
-                                <td>{{ api.sell }}</td>
-                            </tr>
-                        </table>
-                    {% endif %}
-
-                </div>
-                <div id="line_top_x"></div>
+    {% block rate %}
+        <section class="today-info">
+            <div class="container" >
+                <table width="80%" class="table-rate">
+                    <tr>
+                        <td width="80%">Продажа</td>
+                        <td width="80%">Покупка</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="number">{{ api.buy }}</span>
+                        </td>
+                        <td>
+                            <span class="number">{{ api.sell }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="sentence">
+                            <span>По сравнению со вчера курс </span>
+                        </td>
+                    </tr>
+                </table>
             </div>
-        </div>
-    </div>
-{% endblock %}
+        </section>
+    {% endblock %}
+
+
+

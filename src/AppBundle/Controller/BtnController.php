@@ -14,19 +14,25 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Utils\BitcoinApi;
 
 
-class BtnController extends  Controller
+class BtnController extends Controller
 {
+    public $sentence = "Биткоина";
     /**
-     * @Route("/btn", name="bitcoin")
+     * @Route("/bitcoin", name="bitcoin")
      * @param Request $request
      * @return mixed
      */
 
     public function showAction(Request $request)
     {
+        $bitcoin_multiplication  = '';
+        if ($request->get('bitcoin_multiplication') && !empty($request->get('bitcoin_multiplication'))) {
+            $bitcoin_multiplication = $request->get('bitcoin_multiplication');
+        }
+
         $bitcoin = new BitcoinApi();
         $bitcoin->request();
-        $bitcoin->recordToDB();
+        //$bitcoin->recordToDB();
         $arr =  '[
             [11, 19815.59, 19811.71],
             [12,  18811.71, 18611.71],
@@ -41,6 +47,8 @@ class BtnController extends  Controller
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                 'api' => $bitcoin->getResponse(),
                 'arr' => $arr,
+                'multiplication' => $bitcoin_multiplication,
+                'sentence' => $this->sentence,
             ]
         );
         //return $this->render('default/index.html.twig', array('character' => $characters));
