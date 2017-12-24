@@ -6,16 +6,148 @@
         {% block stylesheets  %}
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+           
+            <style>
+                a:hover {
+                    text-decoration: none;
+                }
+                .navbar {
+                    position: fixed;
+                    top: 0;
+                    right: 0;
+                    left: 0;
+                    z-index: 1030;
+                    background: black;
+                    background-color: rgba(0, 0, 0, 0.6);
+                }
+                .navbar-default .navbar-nav>li>a {
+                    color: white;
+                }
+                .navbar-default .navbar-nav>li>a:active {
+                    color: white;
+                }
+                .navbar-default .navbar-brand{
+                    color: goldenrod;
+                }
+                .navbar-default .navbar-brand:hover{
+                    color: goldenrod;
+                }
+                .navbar-default .navbar-brand:active{
+                    color: goldenrod;
+                }
+                .navbar-default .navbar-nav>li>a:hover {
+                    background: #C0C0C0;
+                }
+                .navbar-default .navbar-nav>li>a:visited {
+                    color: white;
+                }
+                .nav {
+                    padding-left: 100px;
+                }
+                .head-margin {
+                    height: 50px;
+                }
+                .today-info {
+                    background: #303F9F;
+                 }
+                .registration {
+                    position: relative;
+                    padding: 90px 47px 60px;
+                    background: #303F9F;
+                    font-size: 25px;
+                }
+                .buttom-top {
+                    margin-top: 90px;
+                }
+                .form-horizontal .form-group {
+                    margin: 0;
+                }
+                .yellow:hover{
+                    background: yellow;
+                }
+                .col-md-6 {
+                        width: 55% !important;
+                }
+                .today-info .container {
+                    position: relative;
+                    padding: 70px 47px 50px;
+                }
+                .table-rate {
+                    color: goldenrod;
+                    font-size: 35px;
+                    text-shadow: 2px 2px 4px black, 0 0 4em red;
+                }
+                .size65 {
+                    font-size: 65px;
+                }
+                .number {
+                    font-size: 65px;
+                }
+                .sentence {
+                    padding-top: 100px;
+                }
+                .sentence-rate {
+                    color: goldenrod;
+                    font-size: 20px;
+                }
+                .diagram {
+                    background: #7B68EE;
+                }
+                label {
+                    color: white;
+                }
+                .container-diagram {
+                    padding: 80px 50px;
+                    margin: auto;
+                }
+                #line_top_x {
+                    margin: auto;
+                }
+                div .convert {
+                    display: inline-block;
+                    width: 150px;
+                    height: 53px;
+                    font-size: 20px;
+                }
+                .form-convert {
+                    margin-top: 50px;
+                }
+                .font-form {
+                    font-size: 30px;
+                }
+                .convert-span {
+                    margin-left: 50px;
+                    font-size: 40px;
+                    color: goldenrod;
+                    padding: 0;
+                }
+                .form-control-lg {
+                    width: 100px;
+                    height: 53px;
+                    padding: 2px;
+                    font-size: 15px;
+                }
+                .form-control {
+                    display: inline-block;
+                }
+=======
             <link  href="{{ asset('css/style.css') }} " rel="stylesheet">
 
 
+            </style>
+
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="https://dl.dropbox.com/s/7xmlb1l35m4s6rj/favicon.ico" />
         {% block head %}
         {% endblock %}
+
+
     </head>
     <body>
     {% block header %}
+        <div class="head-margin"></div>
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <!—Название сайта и кнопка раскрытия меню для мобильных-->
@@ -26,23 +158,83 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Название сайта</a>
+                    <a class="navbar-brand" href="#">Курс валют</a>
                 </div>
                 <!—Само меню-->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Пункт 1</a></li>
-                        <li><a href="#">Пункт 2</a></li>
-                        <li><a href="#">Пункт 3</a></li>
-                        <li><a href="#">Пункт 4</a></li>
-                        <li><a href="#">Пункт 5</a></li>
+                        <li><a href="/national">Национальный банк</a></li>
+                        <li><a href="private">Приват Банк</a></li>
+                        <li><a href="/bitcoin">Биткоин</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#registration">Подписка на рассылку</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
     {% endblock %}
-        {% block body %}
-        {% endblock %}
+
+            {% block rate %}
+            {% endblock %}
+    {% block diagram1 %}
+        <div class="container-diagram" >
+            <div id="line_top_x" ></div>
+        </div>
+    {% endblock %}
+    {% block diagram2 %}
+        <div class="container-diagram" >
+            <div id="line_top_2" ></div>
+        </div>
+    {% endblock %}
+    {% block diagram3 %}
+    <div class="container-diagram" >
+        <div id="line_top_3" ></div>
+    </div>
+    {% endblock %}
+            {% block registration %}
+                <section class="registration">
+                    <div class="container" >
+                        <a name="registration"></a>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-6">
+
+                                    <div class="tab" role="tabpanel">
+                                        <!-- Nav tabs -->
+                                        <p class="sentence-rate">Подписавшись вы будете получать каждый день курс  {{ sentence }}</p>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content tabs">
+                                            <div role="tabpanel" class="tab-pane fade in active" id="Section1">
+                                                <form class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Email</label>
+                                                        <input type="email" class="form-control" id="exampleInputEmail1">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="name">Имя</label>
+                                                        <input type="name" class="form-control" id="name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="yellow btn btn-default">Подписатся</button>
+                                                    </div>
+                                                </form>
+                                                <div class="buttom-top">
+                                                    <a href="#top">
+                                                        <button type="button" class=" yellow btn btn-default btn-lg btn-block">Вверх</button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div><!-- /.col-md-offset-3 col-md-6 -->
+                            </div><!-- /.row -->
+                        </div><!-- /.container -->
+                    </div>
+                </section>
+            {% endblock %}
+
 
 
         {% block javascripts %}{% endblock %}

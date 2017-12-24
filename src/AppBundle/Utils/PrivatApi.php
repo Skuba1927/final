@@ -10,7 +10,7 @@ namespace AppBundle\Utils;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
-use AppBundle\Entity\Private;
+use AppBundle\Entity\PrivateBank;
 
  class PrivatApi
 {
@@ -34,7 +34,7 @@ use AppBundle\Entity\Private;
          return $this->response;
      }
 
-     private function arrayForDB() :array
+     public function arrayForDB() :array
      {
          $private = [];
          foreach ($this->response as  $value) {
@@ -65,18 +65,53 @@ use AppBundle\Entity\Private;
          $array = $this->arrayForDB();
          $em = $this->getDoctrine()->getManager();
 
-         $private = new Private();
-         $private->setEuro_buy($array['euro_buy']);
-         $private->setEuro_sale($array['euro_sale']);
-         $private->setUsd_buy($array['usd_buy']);
-         $private->setUsd_sale($array['usd_sale']);
-         $private->setRur_buy($array['rur_buy']);
-         $private->setRur_sale($array['rur_sale']);
-         $private->setBtn_buy($array['btn_buy']);
-         $private->setBtn_sale($array['btn_sale']);
+         $private = new PrivateBank();
+         $private->setEuroBuy($array['euro_buy']);
+         $private->setEuroSale($array['euro_sale']);
+         $private->setUsdBuy($array['usd_buy']);
+         $private->setUsdSale($array['usd_sale']);
+         $private->setRurBuy($array['rur_buy']);
+         $private->setRurSale($array['rur_sale']);
+         $private->setBtnBuy($array['btn_buy']);
+         $private->setBtnSale($array['btn_sale']);
 
          $em->persist($national);
          $em->flush();
+     }
+
+
+     private function compareRate($currencyBuy, $currencySale, $currency)
+     {
+         //request in the db
+         $array = $this->arrayForDB();
+         if ($array[$currencyBuy] > $yesterdayBuy) {
+             $buyDiff = $array[$currencyBuy] - $yesterdayBuy;
+             $buyString =  " цена покупки ".$currency." выросла на ".$buyDiff.",";
+         } else {
+             $buyDiff = $yesterdayBuy - $array[$currencyBuy];
+             $buyString =  " цена покупки ".$currency." упала на ".$buyDiff.",";
+         }
+
+         if ($array[$currencySale] > $yesterdaySale) {
+             $saleDiff = $array[$currencySale] - $yesterdaySale;
+             $saleString =  " цена покупки ".$currency." выросла на ".$buyDiff.",";
+         } else {
+             $saleDiff = $yesterdaySale - $array[$currencySale];
+             $saleString =  " цена покупки ".$currency." упала на ".$buyDiff.",";
+         }
+     }
+
+     public function joinCompares()
+     {
+         return $this->compareRate('rur_buy', 'rur_sale', 'рубль').
+         ", ".$this->compareRate('btn_buy', 'btn_sale', 'Bitcoin')
+             .", ".$this->compareRate('usd_buy', 'usd_sale', 'USD').
+             ", ".$this->compareRate('euro_buy', 'euro_sale', 'EURO').".";
+     }
+
+     public function convert($first, $second)
+     {
+         return $first * $second;
      }
 
 }
