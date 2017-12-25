@@ -44,12 +44,12 @@
             <div class="container" >
                 <table width="80%" class="table-rate">
                     <tr>
-                        <td width="80%">Продажа</td>
+                        <td width="80%" class="td-btn">Продажа</td>
                         <td width="80%">Покупка</td>
                     </tr>
                     <tr>
-                        <td>
-                            <span class="number">{{ api.buy }}</span>
+                        <td class="td-btn">
+                            <span class="number"> {{ api.buy }}</span>
                         </td>
                         <td>
                             <span class="number">{{ api.sell }}</span>
@@ -61,6 +61,24 @@
                         </td>
                     </tr>
                 </table>
+
+                <form class="form-convert form-horizontal" method="get" action="#convert">
+                    <div class="form-group" style="width: 100%;">
+                        <label for="mail" class="font-form col-sm-2 control-label">BITCOIN</label>
+                        <div class="col-sm-10" style="width: 80%;">
+                            <select class="form-control form-control-lg" name="convertView">
+                                <option value="buy">Покупка</option>
+                                <option value="sell">Продажа</option>
+                            </select>
+                            <input type="text" name="convert" class="convert form-control"
+                                   id="mail"  value="{{ app.request.query.get("convert") }}">
+                            <button type="submit" class="font-form btn btn-success">Конвертировать</button>
+                            {% if  convert != null %}
+                                <span class="convert-span">{{ convert }} USD</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
             </div>
         </section>
     {% endblock %}

@@ -61,12 +61,30 @@
                             {% endfor %}
                             <tr>
                                 <td colspan="3" class="sentence">
+                                    <a name="convert"></a>
                                     <span>По сравнению со вчера: </span>
                                 </td>
                             </tr>
                         </table>
                     {% endif %}
-
+            <form class="form-convert form-horizontal" method="get" action="#convert">
+                <div class="form-group" style="width: 100%;">
+                    <label for="mail" class="font-form col-sm-2 control-label"></label>
+                    <div class=" col-sm-10" style="width: 80%;">
+                        <select class="form-control form-control-lg" name="convertView">
+                            <option value="usd">USD</option>
+                            <option value="eur">EUR</option>
+                            <option value="rub">RUB</option>
+                            <option value="pln">PLN</option>
+                        </select>
+                        <input type="text" name="convert" class="convert form-control" id="mail" value="{{ app.request.query.get("convert") }}">
+                        <button type="submit" class="font-form btn btn-success">Конвертировать</button>
+                        {% if  convert != null %}
+                            <span class="convert-span">{{ convert|round(2, 'common') }} </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
 {% endblock %}

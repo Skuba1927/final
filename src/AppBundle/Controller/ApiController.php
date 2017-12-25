@@ -24,7 +24,9 @@ class ApiController extends Controller
 
     public function showAction(Request $request)
     {
-        $obj = new PrivatApi();
+        $em = $this->getDoctrine()->getManager();
+
+        $obj = new PrivatApi($em);
         $obj->request();
         $array = $obj->arrayForDB();
         //$obj->printRate();
@@ -35,7 +37,48 @@ class ApiController extends Controller
                 $convertUSD = $obj->convert($request->get('convert-usd'), $array['usd_buy']);
             }
         } elseif ($request->get('convertView') == 'sale') {
-            $convertUSD = $obj->convert($request->get('convert-usd'), $array['usd_sale']);
+            if ($request->get('convert-usd') && !empty($request->get('convert-usd'))) {
+                $convertUSD = $obj->convert($request->get('convert-usd'), $array['usd_sale']);
+            }
+        }
+
+        $convertRUB  = '';
+        if ($request->get('convertView') == 'buy') {
+            if ($request->get('convert-rub') && !empty($request->get('convert-rub'))) {
+                $convertRUB = $obj->convert($request->get('convert-rub'), $array['rur_buy']);
+            }
+        } elseif ($request->get('convertView') == 'sale') {
+            if ($request->get('convert-rub') && !empty($request->get('convert-rub'))) {
+                $convertRUB = $obj->convert($request->get('convert-rub'), $array['rur_sale']);
+            }
+        }
+
+        $convertEUR  = '';
+        if ($request->get('convertView') == 'buy') {
+            if ($request->get('convert-eur') && !empty($request->get('convert-eur'))) {
+                $convertEUR = $obj->convert($request->get('convert-eur'), $array['euro_buy']);
+            }
+        } elseif ($request->get('convertView') == 'sale') {
+            if ($request->get('convert-eur') && !empty($request->get('convert-eur'))) {
+                $convertEUR = $obj->convert($request->get('convert-eur'), $array['euro_sale']);
+            }
+        }
+
+        $convertBtn  = '';
+        if ($request->get('convertView') == 'buy') {
+            if ($request->get('convert-btn') && !empty($request->get('convert-btn'))) {
+                $convertBtn = $obj->convert($request->get('convert-btn'), $array['btn_buy']);
+            }
+        } elseif ($request->get('convertView') == 'sale') {
+            if ($request->get('convert-btn') && !empty($request->get('convert-btn'))) {
+                $convertBtn = $obj->convert($request->get('convert-btn'), $array['btn_sale']);
+            }
+        }
+
+        $successfull = null;
+        if ($request->get('email') && $request->get('name')) {
+            $bitcoin->registration($request->get('email'),$request->get('name'));
+            $successfull = 'Yes';
         }
 
         $arr = '[
@@ -65,6 +108,11 @@ class ApiController extends Controller
                 'arr' => $arr,
                 'arrRub' => $arrRub,
                 'convertUSD' => $convertUSD,
+                'convertBtn' => $convertBtn,
+                'convertEUR' => $convertEUR,
+                'convertRUB' => $convertRUB,
+                'get' => $_GET,
+                'successfull' => $successfull,
             ]
         );
         //return $this->render('default/index.html.twig', array('character' => $characters));

@@ -6,7 +6,7 @@
         {% block stylesheets  %}
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-
+            <link  href="{{ asset('css/style.css') }} " rel="stylesheet">
            
             <style>
                 a:hover {
@@ -53,9 +53,15 @@
                  }
                 .registration {
                     position: relative;
-                    padding: 90px 47px 60px;
+                    padding: 90px 40px 60px;
                     background: #303F9F;
                     font-size: 25px;
+                }
+                .container {
+                    width: 100%;
+                }
+                .td-btn {
+                    padding-left: 130px;
                 }
                 .buttom-top {
                     margin-top: 90px;
@@ -71,7 +77,7 @@
                 }
                 .today-info .container {
                     position: relative;
-                    padding: 70px 47px 50px;
+                    padding: 70px 40px 50px;
                 }
                 .table-rate {
                     color: goldenrod;
@@ -131,8 +137,6 @@
                 .form-control {
                     display: inline-block;
                 }
-=======
-            <link  href="{{ asset('css/style.css') }} " rel="stylesheet">
 
 
             </style>
@@ -202,18 +206,23 @@
 
                                     <div class="tab" role="tabpanel">
                                         <!-- Nav tabs -->
+                                        {% if successfull != null %}
+                                        <p class="sentence-rate">Вы подписались на получение курса каждый день</p>
+                                        {% endif %}
+                                        {% if successfull == null %}
                                         <p class="sentence-rate">Подписавшись вы будете получать каждый день курс  {{ sentence }}</p>
+                                        {% endif %}
                                         <!-- Tab panes -->
                                         <div class="tab-content tabs">
                                             <div role="tabpanel" class="tab-pane fade in active" id="Section1">
-                                                <form class="form-horizontal">
+                                                <form class="form-horizontal" method="post" action="#registration">
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Email</label>
-                                                        <input type="email" class="form-control" id="exampleInputEmail1">
+                                                        <input type="email" class="form-control" id="exampleInputEmail1" name="email">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="name">Имя</label>
-                                                        <input type="name" class="form-control" id="name">
+                                                        <input type="name" class="form-control" id="name" name="name">
                                                     </div>
                                                     <div class="form-group">
                                                         <button type="submit" class="yellow btn btn-default">Подписатся</button>

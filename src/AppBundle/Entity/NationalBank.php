@@ -17,6 +17,7 @@ class NationalBank
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -24,7 +25,6 @@ class NationalBank
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $date;
 

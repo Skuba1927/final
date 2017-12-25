@@ -24,9 +24,41 @@ class NationalController extends Controller
 
     public function showAction(Request $request)
     {
-        $national = new NationalApi();
+        $em = $this->getDoctrine()->getManager();
+
+        $national = new NationalApi($em);
         $national->request();
+        $array = $national->arrayForDB();
         //$national->arrayForDB();
+
+        $convert = '';
+        if ($request->get('convertView')) {
+            if ($request->get('convert') && !empty($request->get('convert'))) {
+                switch ($request->get('convertView')) {
+                    case 'usd':
+                        $convert = $national->convert($request->get('convert'), $array['USD']);
+                        break;
+                    case 'eur':
+                        $convert = $national->convert($request->get('convert'), $array['EUR']);
+                        break;
+                    case 'rub':
+                        $convert = $national->convert($request->get('convert'), $array['RUB']);
+                        break;
+                    case 'pln':
+                        $convert = $national->convert($request->get('convert'), $array['PLN']);
+                        break;
+                }
+            }
+
+        }
+
+        $successfull = null;
+        if ($request->get('email') && $request->get('name')) {
+            $bitcoin->registration($request->get('email'),$request->get('name'));
+            $successfull = 'Yes';
+        }
+
+
 
         $arr = '[
             [11, 7.5, 0.48, 26.55, 31.87],
@@ -44,6 +76,8 @@ class NationalController extends Controller
                 'api' => $national->printRate(),
                 'sentence' => $this->sentence,
                 'arr' => $arr,
+                'convert' => $convert,
+                'successfull' => $successfull,
             ]
         );
         //return $this->render('default/index.html.twig', array('character' => $characters));

@@ -11,6 +11,8 @@ namespace AppBundle\Utils;
 use AppBundle\Entity\NationalBank;
 use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\User;
+use Doctrine\ORM\EntityManager;
 
 class NationalApi extends Controller
 {
@@ -19,6 +21,16 @@ class NationalApi extends Controller
     public $currency = 'National Bank';
     private $response;
     public $nationalArray;
+
+    /**
+     * @Var EntityManager
+     */
+    protected $em;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
     private function setResponse($response)
     {
@@ -58,7 +70,7 @@ class NationalApi extends Controller
 
 
     //подготавлоивает массив к записи в базу
-    protected function arrayForDB() :array
+    public function arrayForDB() :array
     {
         foreach ($this->response as  $value) {
             switch ($value->cc) {
@@ -95,28 +107,9 @@ class NationalApi extends Controller
         $em->flush();
     }
 
-    public function getMultiplicationEUR ($number)
+    public function convert($first, $second)
     {
-        $array = $this->arrayForDB();
-        return $number * $array['EUR'];
-    }
-
-    public function getMultiplicationUSD ($number)
-    {
-        $array = $this->arrayForDB();
-        return $number * $array['USD'];
-    }
-
-    public function getMultiplicationPLN ($number)
-    {
-        $array = $this->arrayForDB();
-        return $number * $array['PLN'];
-    }
-
-    public function getMultiplicationRUB ($number)
-    {
-        $array = $this->arrayForDB();
-        return $number * $array['EUR'];
+        return $first * $second;
     }
 
     private function compareRate($currency)
@@ -137,5 +130,15 @@ class NationalApi extends Controller
     {
         return $this->compareRate('RUB').", ".$this->compareRate('PLN')
             .", ".$this->compareRate('USD').", ".$this->compareRate('EUR').".";
+    }
+
+    public function registration($email, $name) {
+        $user = new User();
+        $user->setEmail($email);
+        $user->setName($name);
+        $user->setNationalBank(1);
+
+        $this->em->persist($user);
+        $this->em->flush();
     }
 }

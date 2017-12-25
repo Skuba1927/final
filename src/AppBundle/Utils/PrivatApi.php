@@ -11,6 +11,8 @@ namespace AppBundle\Utils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
 use AppBundle\Entity\PrivateBank;
+use Doctrine\ORM\EntityManager;
+use AppBundle\Entity\User;
 
  class PrivatApi
 {
@@ -18,6 +20,16 @@ use AppBundle\Entity\PrivateBank;
     const API_URL = "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5";
     public $currency = 'Privat';
     private $response;
+
+     /**
+      * @Var EntityManager
+      */
+     protected $em;
+
+     public function __construct(EntityManager $em)
+     {
+         $this->em = $em;
+     }
 
     public function request() :array
     {
@@ -51,7 +63,7 @@ use AppBundle\Entity\PrivateBank;
                      $private['rur_buy'] = $value->buy;
                      $private['rur_sale'] = $value->sale;
                      break;
-                 case 'BTN' :
+                 case 'BTC' :
                      $private['btn_buy'] = $value->buy;
                      $private['btn_sale'] = $value->sale;
                      break;
@@ -114,5 +126,14 @@ use AppBundle\Entity\PrivateBank;
          return $first * $second;
      }
 
+     public function registration($email, $name) {
+         $user = new User();
+         $user->setEmail($email);
+         $user->setName($name);
+         $user->setPrivatBank(1);
+
+         $this->em->persist($user);
+         $this->em->flush();
+     }
 }
 

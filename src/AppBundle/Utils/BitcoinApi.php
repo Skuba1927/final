@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\User;
 
 class BitcoinApi extends Controller
 {
@@ -48,7 +49,7 @@ class BitcoinApi extends Controller
         return $this->setResponse(json_decode(file_get_contents(self::API_URL)));
     }
 
-    private function arrayForDB() :array
+    public function arrayForDB() :array
     {
          return $array = [
              'buy' => $this->response->buy,
@@ -69,9 +70,20 @@ class BitcoinApi extends Controller
         $this->em->flush();
     }
 
-    public function getMultiplication ($number)
+    public function getDateForDiagram()
     {
-        return $number * $this->response->buy;
+        $repository = $this->em->getRepository('BitcoinRepository::class');
+        $query = $repository->createQueryBuilder('p')
+            ->setMaxResults(7)
+            ->getQuery();
+        return $query->getResult();
+
+
+    }
+
+    public function convert ($number, $value)
+    {
+        return $number * $value;
     }
 
     private function compareSell() {
@@ -101,6 +113,16 @@ class BitcoinApi extends Controller
     public function joinCompares()
     {
         return $this->compareBuy().", ".$this->compareSell().".";
+    }
+
+    public function registration($email, $name) {
+        $user = new User();
+        $user->setEmail($email);
+        $user->setName($name);
+        $user->setBitcoin(1);
+
+        $this->em->persist($user);
+        $this->em->flush();
     }
 }
 

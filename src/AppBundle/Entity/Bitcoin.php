@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Bitcoin
  *
  * @ORM\Table(name="bitcoin")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\MonRépertoire\MonRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BitcoinRepository")
  */
 class Bitcoin
 {
@@ -17,15 +17,14 @@ class Bitcoin
      *
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+     * @ORM\Column(name="date", type="datetime", nullable=false) */
     private $date;
 
     /**

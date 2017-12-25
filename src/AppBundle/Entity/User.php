@@ -31,16 +31,82 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=30, nullable=false)
+     * @ORM\Column(name="email", type="string",unique=true, length=30, nullable=false)
      */
     private $email;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="password", type="string", length=30, nullable=false)
+     * @ORM\Column(name="private", type="boolean", nullable=true, options={"default":0})
      */
-    private $password;
+
+    private $privatBank;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="national", type="boolean", nullable=true,  options={"default":0})
+     */
+
+    private $nationalBank;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="bitcoin", type="boolean", nullable=true,  options={"default":0})
+     */
+
+    private $bitcoin;
+
+    /**
+     * @return mixed
+     */
+    public function getPrivatBank()
+    {
+        return $this->privatBank;
+    }
+
+    /**
+     * @param mixed $privatBank
+     */
+    public function setPrivatBank($privatBank)
+    {
+        $this->privatBank = $privatBank;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNationalBank(): bool
+    {
+        return $this->nationalBank;
+    }
+
+    /**
+     * @param bool $nationalBank
+     */
+    public function setNationalBank(bool $nationalBank)
+    {
+        $this->nationalBank = $nationalBank;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBitcoin(): bool
+    {
+        return $this->bitcoin;
+    }
+
+    /**
+     * @param bool $bitcoin
+     */
+    public function setBitcoin(bool $bitcoin)
+    {
+        $this->bitcoin = $bitcoin;
+    }
+
 
     /**
      * @return int
@@ -90,21 +156,6 @@ class User
         $this->email = $email;
     }
 
-    /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword(string $password)
-    {
-        $this->password = $password;
-    }
 
 
 }

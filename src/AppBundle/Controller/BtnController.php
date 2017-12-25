@@ -12,11 +12,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Utils\BitcoinApi;
+use Doctrine\ORM\EntityManager;
 
 
 class BtnController extends Controller
 {
     public $sentence = "Биткоина";
+
     /**
      * @Route("/bitcoin", name="bitcoin")
      * @param Request $request
@@ -31,13 +33,38 @@ class BtnController extends Controller
             $bitcoin_multiplication = $request->get('bitcoin_multiplication');
         }
 
+
+
        
 
         $em = $this->getDoctrine()->getManager();
 
         $bitcoin = new BitcoinApi($em);
         $bitcoin->request();
+        $q = $bitcoin->getDateForDiagram();
+        var_dump($q);
+        $array = $bitcoin->arrayForDB();
+
         //$bitcoin->recordToDB();
+
+        $successfull = null;
+        if ($request->get('email') && $request->get('name')) {
+            $bitcoin->registration($request->get('email'),$request->get('name'));
+            $successfull = 'Yes';
+        }
+
+
+        $convert  = '';
+        if ($request->get('convertView') == 'buy') {
+            if ($request->get('convert') && !empty($request->get('convert'))) {
+                $convert = $bitcoin->convert($request->get('convert'), $array['sell']);
+            }
+        } elseif ($request->get('convertView') == 'sell') {
+            if ($request->get('convert') && !empty($request->get('convert'))) {
+                $convert = $bitcoin->convert($request->get('convert'), $array['buy']);
+            }
+        }
+
         $arr =  '[
             [11, 19815.59, 19811.71],
             [12,  18811.71, 18611.71],
@@ -54,6 +81,8 @@ class BtnController extends Controller
                 'arr' => $arr,
                 'multiplication' => $bitcoin_multiplication,
                 'sentence' => $this->sentence,
+                'convert' => $convert,
+                'successfull' => $successfull,
             ]
         );
         //return $this->render('default/index.html.twig', array('character' => $characters));
